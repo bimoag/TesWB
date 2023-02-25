@@ -7,7 +7,7 @@ error_reporting(0);
 session_start();
 
 if (isset($_SESSION['adminUsername'])) {
-    header("Location: index.php");
+    header("Location: view-admin.php");
 }
 
 
@@ -67,10 +67,10 @@ if (isset($_SESSION['adminUsername'])) {
                                     </form>
                                     <hr>
                                     <center>
-                                    <!-- Menampung jika ada pesan -->
-                                    <?php if (isset($_GET['pesan'])) {  ?>
-                                        <label style="color:red;"><?php echo $_GET['pesan']; ?></label>
-                                    <?php } ?>
+                                        <!-- Menampung jika ada pesan -->
+                                        <?php if (isset($_GET['pesan'])) {  ?>
+                                            <label style="color:red;"><?php echo $_GET['pesan']; ?></label>
+                                        <?php } ?>
                                     </center>
                                 </div>
                             </div>
