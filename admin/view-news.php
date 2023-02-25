@@ -67,11 +67,59 @@ if (!isset($_SESSION['adminUsername'])) {
 
                     <!-- DataTales Example -->
                     <div class="mx-auto w-auto mb-4">
-                        <button type='button' class="btn btn-primary">Add Admin</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddNews" data-whatever="@mdo">Add News</button>
                     </div>
+                    <!-- modal add news-->
+                    <script type="text/javascript" src="../javascript/ckeditor/ckeditor.js"></script>
+                    <div class="modal fade" id="modalAddNews" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add News</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label class="col-form-label">Title:</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label">Content:</label>
+                                            <textarea class="ckeditor" id="ckedtor" name="newsContent"></textarea>
+                                            <!-- <textarea class="form-control" rows="6" cols="100" id="message-text"></textarea> -->
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label">Author:</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label">Date:</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label">Photo:</label>
+                                            <input type="file">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label">Status:</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end modal add news -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Data News</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -94,7 +142,7 @@ if (!isset($_SESSION['adminUsername'])) {
                                         <?php
                                         include 'com/com-connect.php';
                                         $no = 1;
-                                        $data = mysqli_query($conn, "select * from news order by newsId");
+                                        $data = mysqli_query($conn, "select * from news order by newsId desc");
                                         while ($dataNews = mysqli_fetch_array($data)) {
                                         ?>
                                             <tr>
