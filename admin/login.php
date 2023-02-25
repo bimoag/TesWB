@@ -1,4 +1,18 @@
-<?php session_start(); ?>
+<?php
+
+include 'com/com-connect.php';
+
+error_reporting(0);
+
+session_start();
+
+if (isset($_SESSION['adminUsername'])) {
+    header("Location: index.php");
+}
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,12 +61,17 @@
                                         <div class="form-group">
                                             <input type="password" name="adminPassword" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" name="submit" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </button>
                                     </form>
                                     <hr>
-
+                                    <center>
+                                    <!-- Menampung jika ada pesan -->
+                                    <?php if (isset($_GET['pesan'])) {  ?>
+                                        <label style="color:red;"><?php echo $_GET['pesan']; ?></label>
+                                    <?php } ?>
+                                    </center>
                                 </div>
                             </div>
                         </div>

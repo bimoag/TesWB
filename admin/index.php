@@ -1,3 +1,13 @@
+<?php 
+ 
+session_start();
+ 
+if (!isset($_SESSION['adminUsername'])) {
+    header("Location: login.php");
+}
+ 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +19,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Adm<i class="fa fa-indent" aria-hidden="true"></i></title>
+  <title>Adm</title>
 
   <!-- Custom fonts for this template-->
   <link href="../javascript/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,7 +56,16 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800">
+              <?php
+              if(isset($_SESSION['adminName'])) { // Memeriksa apakah session 'adminname' telah diset atau belum
+                $adminName = $_SESSION['adminName'];
+                print "Halo, " . $adminName . "!"; // Menampilkan pesan dengan nama admin
+              } else {
+                print "Session tidak ditemukan"; // Menampilkan pesan jika session tidak ditemukan
+              } 
+              ?>
+            </h1>
           </div>
 
           <!-- Content Row -->
