@@ -74,37 +74,43 @@ if (!isset($_SESSION['adminUsername'])) {
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form method="POST" action="../modz/news-input.php" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label class="col-form-label">Title:</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" name="newsTittle" class="form-control" required="">
                                         </div>
                                         <div class="form-group">
                                             <label for="message-text" class="col-form-label">Content:</label>
-                                            <textarea class="ckeditor" id="ckedtor" name="newsContent"></textarea>
-                                            <!-- <textarea class="form-control" rows="6" cols="100" id="message-text"></textarea> -->
+                                            <textarea class="ckeditor" id="ckedtor" name="newsContent" required=""></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-form-label">Author:</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" name="newsAuthor" class="form-control" required="">
                                         </div>
                                         <div class="form-group">
                                             <label class="col-form-label">Date:</label>
-                                            <input type="text" class="form-control">
+                                            <input type="date" name="newsDate" class="form-control" required="">
                                         </div>
-                                        <div class="form-group">
+                                        <div class="input-group date" id="datepicker">
                                             <label class="col-form-label">Photo:</label>
-                                            <input type="file">
+                                            <input type="file" name="newsPhoto">
                                         </div>
                                         <div class="form-group">
                                             <label class="col-form-label">Status:</label>
-                                            <input type="text" class="form-control">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="newsStatus" value="1" id="flexRadioDefault1" checked>
+                                                <label class="form-check-label" for="flexRadioDefault1">Show</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="newsStatus" value="0" id="flexRadioDefault2">
+                                                <label class="form-check-label" for="flexRadioDefault2">Hide</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>

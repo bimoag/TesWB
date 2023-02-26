@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['adminUsername'] = $data['adminUsername'];
         $_SESSION['adminName'] = $data['adminName'];
         $_SESSION['adminId'] = $data['adminId'];
-        header("Location: ../admin/view-admin.php");
+        header("Location: ../admin/index.php");
     } else {
         header("location:../admin/login.php?pesan=Gagal login! User tidak aktif / tidak ditemukan.");
     }
