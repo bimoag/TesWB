@@ -1,5 +1,5 @@
 <?php
-
+include 'com/com-connect.php';
 session_start();
 
 if (!isset($_SESSION['adminUsername'])) {
@@ -21,14 +21,7 @@ if (!isset($_SESSION['adminUsername'])) {
 
     <title>Adm</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="../javascript/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <!-- Custom styles for this template-->
-    <link href="../style/css/sb-admin-2.min.css" rel="stylesheet">
-    <!-- Custom styles for this page -->
-    <link href="../javascript/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <?php include 'com/com-css.php'; ?>
 
 </head>
 
@@ -140,7 +133,7 @@ if (!isset($_SESSION['adminUsername'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        include 'com/com-connect.php';
+
                                         $no = 1;
                                         $data = mysqli_query($conn, "select * from news order by newsId desc");
                                         while ($dataNews = mysqli_fetch_array($data)) {
@@ -164,7 +157,7 @@ if (!isset($_SESSION['adminUsername'])) {
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-warning" data-toggle="modal" data-target="#modal-edit"><i class="bi bi-pencil"></i></button>
-                                                    <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" id="sa-params"><i class="bi bi-trash"></i></button>
+                                                    <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete<?php print $dataNews['newsId']; ?>" id="sa-params"><i class="bi bi-trash"></i></button>
                                                 </td>
                                             </tr>
                                         <?php } ?>
@@ -173,7 +166,30 @@ if (!isset($_SESSION['adminUsername'])) {
                             </div>
                         </div>
                     </div>
-
+                    <!-- modal hapus -->
+                    <?php
+                    $data = mysqli_query($conn, "select * from news order by newsId desc");
+                    while ($dataNews = mysqli_fetch_array($data)) {
+                    ?>
+                        <div class="modal fade" id="modal-delete<?php print $dataNews['newsId']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Ready to Delete Data?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Are you sure want to delete Tittle : <?php print $dataNews['newsTittle']; ?></div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                        <a class="btn btn-primary" href="../modz/news-delete.php?newsId=<?php print $dataNews['newsId']; ?>">Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <!-- tutup modal hapus -->
 
                 </div>
                 <!-- /.container-fluid -->
@@ -198,25 +214,7 @@ if (!isset($_SESSION['adminUsername'])) {
 
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../javascript/vendor/jquery/jquery.min.js"></script>
-    <script src="../javascript/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="../javascript/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="../javascript/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="../javascript/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="../javascript/js/demo/chart-area-demo.js"></script>
-    <script src="../javascript/js/demo/chart-pie-demo.js"></script>
-    <script src="../javascript/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="../javascript/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="../javascript/js/demo/datatables-demo.js"></script>
+    <?php include 'com/com-js.php'; ?>
 
 </body>
 
