@@ -93,7 +93,7 @@ if (!isset($_SESSION['adminUsername'])) {
                                         </div>
                                         <div class="input-group date" id="datepicker">
                                             <label class="col-form-label">Photo:</label>
-                                            <input type="file" name="newsPhoto">
+                                            <input type="file" name="newsPhoto" required="">
                                         </div>
                                         <div class="form-group">
                                             <label class="col-form-label">Status:</label>
@@ -142,6 +142,7 @@ if (!isset($_SESSION['adminUsername'])) {
 
                                         $no = 1;
                                         $data = mysqli_query($conn, "select * from news order by newsId desc");
+
                                         while ($dataNews = mysqli_fetch_array($data)) {
                                         ?>
                                             <tr>
