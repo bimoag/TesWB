@@ -23,6 +23,10 @@ if (!isset($_SESSION['adminUsername'])) {
 
     <?php include 'com/com-css.php'; ?>
 
+
+
+
+
 </head>
 
 <body id="page-top">
@@ -91,9 +95,12 @@ if (!isset($_SESSION['adminUsername'])) {
                                             <label class="col-form-label">Date:</label>
                                             <input type="date" name="newsDate" class="form-control" required="">
                                         </div>
-                                        <div class="input-group date" id="datepicker">
+                                        <div class="form-group">
                                             <label class="col-form-label">Photo:</label>
-                                            <input type="file" name="newsPhoto" required="">
+                                            <div class="custom-file">
+                                                <input type="file" name="newsPhoto" class="custom-file-input" id="customFile">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-form-label">Status:</label>
@@ -163,7 +170,7 @@ if (!isset($_SESSION['adminUsername'])) {
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-warning" data-toggle="modal" data-target="#modal-edit"><i class="bi bi-pencil"></i></button>
+                                                    <button class="btn btn-warning" data-toggle="modal" data-target="#modal-edit<?php print $dataNews['newsId']; ?>"><i class="bi bi-pencil"></i></button>
                                                     <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete<?php print $dataNews['newsId']; ?>" id="sa-params"><i class="bi bi-trash"></i></button>
                                                 </td>
                                             </tr>
@@ -182,7 +189,7 @@ if (!isset($_SESSION['adminUsername'])) {
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ready to Delete Data?</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete News?</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
@@ -197,6 +204,79 @@ if (!isset($_SESSION['adminUsername'])) {
                         </div>
                     <?php } ?>
                     <!-- tutup modal hapus -->
+                    <!-- modal edit news-->
+                    <?php
+                    $data = mysqli_query($conn, "select * from news order by newsId desc");
+                    while ($dataNews = mysqli_fetch_array($data)) {
+                    ?>
+                        <script type="text/javascript" src="../javascript/ckeditor/ckeditor.js"></script>
+                        <div class="modal fade" id="modal-edit<?php print $dataNews['newsId']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit News</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="../modz/edit-input.php" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Title:</label>
+                                                <input type="hidden" name="newsId" value="<?php echo $dataNews['newsId']; ?>" class="form-control" required="">
+                                                <input type="text" name="newsTittle" value="<?php echo $dataNews['newsTittle']; ?>" class="form-control" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Content:</label>
+                                                <textarea class="ckeditor" id="ckedtor" name="newsContent" required=""><?php echo $dataNews['newsContent']; ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Author:</label>
+                                                <input type="text" name="newsAuthor" value="<?php echo $dataNews['newsAuthor']; ?>" class="form-control" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Date:</label>
+                                                <input type="date" name="newsDate" class="form-control" value="<?php echo $dataNews['newsDate']; ?>" required="">
+                                            </div>
+                                            <div class="input-group date" id="datepicker">
+                                                <label class="col-form-label">Photo:</label>
+                                                <input type="file" name="newsPhoto" value="<?php echo $dataNews['newsPhoto']; ?>" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Status:</label>
+                                                <?php if ($dataNews['newsStatus'] == 1) { ?>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="newsStatus" value="1" id="flexRadioDefault1" checked>
+                                                        <label class="form-check-label" for="flexRadioDefault1">Show</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="newsStatus" value="0" id="flexRadioDefault2">
+                                                        <label class="form-check-label" for="flexRadioDefault2">Hide</label>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="newsStatus" value="1" id="flexRadioDefault1">
+                                                        <label class="form-check-label" for="flexRadioDefault1">Show</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="newsStatus" value="0" id="flexRadioDefault2" checked>
+                                                        <label class="form-check-label" for="flexRadioDefault2">Hide</label>
+                                                    </div>
+                                                <?php } ?>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <!-- end modal edit news -->
 
                 </div>
                 <!-- /.container-fluid -->
@@ -222,6 +302,14 @@ if (!isset($_SESSION['adminUsername'])) {
 
 
     <?php include 'com/com-js.php'; ?>
+
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 
 </body>
 
